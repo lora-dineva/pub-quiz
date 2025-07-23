@@ -13,6 +13,8 @@ A comprehensive backend system for managing pub quiz questions built with Python
 - ✅ **Docker Orchestration**: Complete Docker Compose setup
 - ✅ **RESTful API**: FastAPI with automatic OpenAPI documentation
 - ✅ **Data Validation**: Pydantic schemas for request/response validation
+- ✅ **Web UI**: Modern, responsive frontend for adding questions
+- ✅ **Real-time Validation**: Dynamic form validation and category filtering
 
 ## Project Structure
 
@@ -28,6 +30,11 @@ pub-quiz/
 │   ├── database.py       # Database configuration
 │   ├── categories.py     # Categories dictionary
 │   └── crud.py          # Database operations
+├── frontend/
+│   ├── index.html        # Web UI form
+│   ├── app.js           # Frontend JavaScript
+│   ├── nginx.conf       # Web server config
+│   └── README.md        # Frontend documentation
 ├── media/
 │   ├── images/          # Image files storage
 │   ├── videos/          # Video files storage
@@ -77,9 +84,34 @@ pub-quiz/
    ```
 
 3. **Access the application:**
-   - API: http://localhost:8000
-   - API Documentation: http://localhost:8000/docs
-   - pgAdmin (optional): http://localhost:5050
+   - **Frontend UI**: http://localhost:3000 🎯
+   - **API**: http://localhost:8000
+   - **API Documentation**: http://localhost:8000/docs
+   - **pgAdmin** (optional): http://localhost:5050
+
+## Using the Web Interface
+
+### Adding Questions via Web UI
+
+1. **Open the frontend**: Navigate to http://localhost:3000
+2. **Fill out the form**:
+   - Enter your question text
+   - Provide the correct answer
+   - Select question type (open, true/false, image, video, audio)
+   - Choose a category from the dropdown
+   - Pick a subcategory (updates automatically based on category)
+   - Upload media file if using image/video/audio question types
+3. **Submit**: Click "Add Question" to save to the database
+4. **Success**: You'll see a confirmation message with the question ID
+
+### Features of the Web UI
+
+- **Real-time validation**: Form validates input as you type
+- **Dynamic subcategories**: Subcategory options update based on selected category
+- **Media upload**: File upload appears only for image/video/audio question types
+- **Auto-save**: Form data is automatically saved locally to prevent data loss
+- **API status**: Shows connection status to the backend
+- **Responsive design**: Works on desktop, tablet, and mobile devices
 
 ### Manual Setup
 
@@ -167,6 +199,7 @@ curl "http://localhost:8000/questions/?category=History&limit=10"
 
 - **postgres**: PostgreSQL 15 database server
 - **backend**: FastAPI application server
+- **frontend**: Nginx web server serving the UI (http://localhost:3000)
 - **pgadmin**: Web-based PostgreSQL administration (optional)
 
 ## Environment Variables

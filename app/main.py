@@ -3,6 +3,7 @@ Main FastAPI application for the Pub Quiz backend.
 """
 
 from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import List, Optional
 import uuid
@@ -17,6 +18,15 @@ app = FastAPI(
     title="Pub Quiz API",
     description="Backend API for managing pub quiz questions",
     version="1.0.0"
+)
+
+# Add CORS middleware to allow frontend access
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Initialize database on startup

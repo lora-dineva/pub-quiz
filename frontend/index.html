@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pub Quiz - Add Question</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'quiz-blue': '#3b82f6',
+                        'quiz-green': '#10b981',
+                        'quiz-red': '#ef4444'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen py-8">
+    <div class="max-w-2xl mx-auto px-4">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">🧠 Pub Quiz</h1>
+            <p class="text-gray-600">Add a new quiz question</p>
+        </div>
+
+        <!-- Success/Error Messages -->
+        <div id="message-container" class="mb-6 hidden">
+            <div id="success-message" class="bg-quiz-green bg-opacity-10 border border-quiz-green text-quiz-green px-4 py-3 rounded-lg hidden">
+                <div class="flex items-center">
+                    <span class="text-xl mr-2">✅</span>
+                    <span id="success-text">Question added successfully!</span>
+                </div>
+            </div>
+            <div id="error-message" class="bg-quiz-red bg-opacity-10 border border-quiz-red text-quiz-red px-4 py-3 rounded-lg hidden">
+                <div class="flex items-center">
+                    <span class="text-xl mr-2">❌</span>
+                    <span id="error-text">Something went wrong. Please try again.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Form -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <form id="question-form" class="space-y-6">
+                <!-- Question Text -->
+                <div>
+                    <label for="question_text" class="block text-sm font-medium text-gray-700 mb-2">
+                        Question Text *
+                    </label>
+                    <textarea 
+                        id="question_text" 
+                        name="question_text" 
+                        required
+                        rows="3"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-quiz-blue focus:border-transparent resize-none"
+                        placeholder="Enter your quiz question here..."
+                    ></textarea>
+                </div>
+
+                <!-- Answer Text -->
+                <div>
+                    <label for="answer_text" class="block text-sm font-medium text-gray-700 mb-2">
+                        Answer Text *
+                    </label>
+                    <input 
+                        type="text" 
+                        id="answer_text" 
+                        name="answer_text" 
+                        required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-quiz-blue focus:border-transparent"
+                        placeholder="Enter the correct answer..."
+                    />
+                </div>
+
+                <!-- Question Type -->
+                <div>
+                    <label for="question_type" class="block text-sm font-medium text-gray-700 mb-2">
+                        Question Type *
+                    </label>
+                    <select 
+                        id="question_type" 
+                        name="question_type" 
+                        required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-quiz-blue focus:border-transparent"
+                    >
+                        <option value="">Select question type...</option>
+                        <option value="open">Open Question</option>
+                        <option value="true_false">True/False</option>
+                        <option value="image">Image Question</option>
+                        <option value="video">Video Question</option>
+                        <option value="audio">Audio Question</option>
+                    </select>
+                </div>
+
+                <!-- Category -->
+                <div>
+                    <label for="category" class="block text-sm font-medium text-gray-700 mb-2">
+                        Category *
+                    </label>
+                    <select 
+                        id="category" 
+                        name="category" 
+                        required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-quiz-blue focus:border-transparent"
+                    >
+                        <option value="">Loading categories...</option>
+                    </select>
+                </div>
+
+                <!-- Subcategory -->
+                <div>
+                    <label for="subcategory" class="block text-sm font-medium text-gray-700 mb-2">
+                        Subcategory *
+                    </label>
+                    <select 
+                        id="subcategory" 
+                        name="subcategory" 
+                        required
+                        disabled
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-quiz-blue focus:border-transparent disabled:bg-gray-100"
+                    >
+                        <option value="">Select a category first...</option>
+                    </select>
+                </div>
+
+                <!-- Media File Upload -->
+                <div id="media-upload-section" class="hidden">
+                    <label for="media_file" class="block text-sm font-medium text-gray-700 mb-2">
+                        Media File (Optional)
+                    </label>
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-quiz-blue transition-colors">
+                        <div class="space-y-1 text-center">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <div class="flex text-sm text-gray-600">
+                                <label for="media_file" class="relative cursor-pointer bg-white rounded-md font-medium text-quiz-blue hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-quiz-blue">
+                                    <span>Upload a file</span>
+                                    <input id="media_file" name="media_file" type="file" class="sr-only" accept="image/*,video/*,audio/*">
+                                </label>
+                                <p class="pl-1">or drag and drop</p>
+                            </div>
+                            <p class="text-xs text-gray-500" id="file-types">
+                                Images, videos, or audio files
+                            </p>
+                        </div>
+                    </div>
+                    <div id="file-preview" class="mt-2 hidden">
+                        <div class="flex items-center space-x-2 text-sm text-gray-600">
+                            <span>📎</span>
+                            <span id="file-name"></span>
+                            <button type="button" id="remove-file" class="text-quiz-red hover:text-red-600">Remove</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-4">
+                    <button 
+                        type="submit" 
+                        id="submit-button"
+                        class="w-full bg-quiz-blue text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-600 focus:ring-2 focus:ring-offset-2 focus:ring-quiz-blue transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        <span id="submit-text">Add Question</span>
+                        <span id="submit-loading" class="hidden">
+                            <svg class="inline w-4 h-4 mr-2 animate-spin" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+                                <path class="opacity-75" fill="currentColor" d="m15.84 10.32l1.42 1.42l-5.66 5.66l-3.54-3.54l1.42-1.42l2.12 2.12l4.24-4.24z"></path>
+                            </svg>
+                            Adding...
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- API Status -->
+        <div class="mt-6 text-center">
+            <div id="api-status" class="inline-flex items-center space-x-2 text-sm">
+                <div class="w-2 h-2 bg-gray-400 rounded-full" id="status-indicator"></div>
+                <span id="status-text" class="text-gray-500">Checking connection...</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html> 
