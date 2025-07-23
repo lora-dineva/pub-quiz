@@ -1,0 +1,19 @@
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Node.js
+node_modules/
+
+# Build output
+dist/
+build/
+
+# IDE settings
+.vscode/
+.idea/
+
+# macOS system file
+.DS_Store
+
